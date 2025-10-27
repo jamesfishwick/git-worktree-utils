@@ -26,9 +26,16 @@ cd git-worktree-utils
 wt                      # List all worktrees
 wt feature/payment      # Create worktree for branch
 wtclean                 # Clean up orphaned directories
+
+# Get comprehensive help
+wthelp                  # Help overview with examples
+wthelp wt               # Detailed help for specific command
+wt --help               # Alternative syntax (same as above)
 ```
 
 **Note**: Commands can be run from any directory within your git repository. The tool automatically determines the repository root.
+
+**Need help?** Start with `wthelp` for a comprehensive guide including examples, workflows, and configuration options.
 
 ## The Mental Model
 
@@ -54,6 +61,9 @@ wt
 # Create/switch to worktree for a branch
 wt feature/new-thing
 
+# Get help
+wt --help
+
 # Creates: ../myproject-feature-new-thing/
 # Switches to that directory automatically
 ```
@@ -73,6 +83,9 @@ wt feature/new-thing
 ```bash
 # Full cleanup of broken worktrees
 wtclean
+
+# Get help
+wtclean --help
 
 # What it does:
 # 1. Prunes invalid worktree references
@@ -301,6 +314,37 @@ diff -r ../myapp-approach-1 ../myapp-approach-2
 - Some IDEs may need restart when switching worktrees
 - Git hooks are shared across all worktrees
 
+## Getting Help
+
+Comprehensive built-in help is available for all commands:
+
+```bash
+# Overview and quick reference
+wthelp
+
+# Detailed help for specific commands
+wthelp wt
+wthelp wtclean
+wthelp wtlist
+wthelp wts
+
+# Configuration reference
+wthelp config
+
+# Alternative syntax (also works)
+wt --help
+wtclean --help
+wtlist --help
+wts --help
+```
+
+The help system includes:
+- Command usage and descriptions
+- Real-world examples and scenarios
+- Configuration options explained
+- Common workflows and patterns
+- Troubleshooting tips
+
 ## Contributing
 
 PRs welcome! Please ensure:
@@ -309,6 +353,7 @@ PRs welcome! Please ensure:
 2. Functions work in both bash and zsh
 3. Destructive operations have confirmations
 4. Documentation updated for new features
+5. Help text added for new commands
 
 ## License
 
