@@ -1,0 +1,70 @@
+# Git Worktree Utils Configuration Example
+# Copy this to ~/.config/git-worktree-utils/config and customize
+
+# ====================
+# Core Settings
+# ====================
+
+# Automatically prune broken worktree references on every wt command
+# This is generally safe and recommended
+GWT_AUTO_PRUNE=true
+
+# Prompt before deleting directories
+# Set to false for automated workflows
+GWT_CONFIRM_DELETE=true
+
+# ====================
+# Directory Patterns
+# ====================
+
+# Patterns for finding worktree directories during cleanup
+# These are shell glob patterns relative to the parent directory
+# The * will be replaced with your repository name
+GWT_CLEANUP_PATTERNS="*-feature* *-hotfix* *-release* *-review* *-epic* *-experiment* *-bugfix*"
+
+# Future feature: Custom directory naming pattern
+# Available variables:
+#   {base} - Current repository directory name
+#   {branch} - Sanitized branch name (/ replaced with -)
+#   {date} - Current date (YYYYMMDD)
+# GWT_DIR_PATTERN="{base}-{branch}"
+
+# ====================
+# UI Settings  
+# ====================
+
+# Enable colored output
+GWT_USE_COLOR=true
+
+# ====================
+# Advanced Settings
+# ====================
+
+# Maximum directory search depth for cleanup (future feature)
+# GWT_MAX_SEARCH_DEPTH=1
+
+# Automatically initialize submodules in new worktrees
+# GWT_AUTO_INIT_SUBMODULES=true
+
+# Default branch to use as base for new branches (future feature)
+# GWT_DEFAULT_BASE_BRANCH="main"
+
+# ====================
+# Custom Aliases (future feature)
+# ====================
+
+# Define shortcuts for common branch patterns
+# GWT_ALIAS_F="feature/"
+# GWT_ALIAS_H="hotfix/"
+# GWT_ALIAS_R="release/"
+# Usage: wt @f/user-auth → feature/user-auth
+
+# ====================
+# Hooks (future feature)
+# ====================
+
+# Script to run after creating a worktree
+# GWT_POST_CREATE_HOOK="~/.config/git-worktree-utils/hooks/post-create.sh"
+
+# Script to run before deleting a worktree
+# GWT_PRE_DELETE_HOOK="~/.config/git-worktree-utils/hooks/pre-delete.sh"

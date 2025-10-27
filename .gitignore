@@ -1,0 +1,24 @@
+# Test artifacts
+/tmp/
+test-output/
+*.test
+
+# Backup files
+*.backup
+*.backup.*
+*.tmp
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+
+# Logs
+*.log

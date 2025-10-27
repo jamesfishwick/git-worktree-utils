@@ -1,0 +1,20 @@
+# Git Worktree Utils Configuration
+# Edit this file to customize behavior
+
+# Auto-prune broken worktrees on every wt command
+GWT_AUTO_PRUNE=true
+
+# Prompt before deleting directories
+GWT_CONFIRM_DELETE=true
+
+# Directory patterns to search for during cleanup
+# Space-separated list of patterns (relative to parent directory)
+GWT_CLEANUP_PATTERNS="*-feature* *-hotfix* *-release* *-review* *-epic* *-experiment*"
+
+# Directory naming pattern (future feature)
+# {base} = current directory name
+# {branch} = sanitized branch name
+GWT_DIR_PATTERN="{base}-{branch}"
+
+# Enable colored output
+GWT_USE_COLOR=true
