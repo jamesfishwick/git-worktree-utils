@@ -79,25 +79,30 @@ _gwt_list_recent() {
 
 # Main worktree function
 wt() {
-    # Handle --help flag
+    # Handle --help flag first, before any other checks
     if [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]; then
         wthelp wt
-        return
+        return 0
     fi
 
-    # Check if we're in a git repository
+    # If no argument, list worktrees (doesn't require git repo check if we just want to show nothing)
+    if [[ -z "$1" ]]; then
+        # Check if we're in a git repository
+        if ! git rev-parse --git-dir > /dev/null 2>&1; then
+            _gwt_print "$RED" "✗ Not in a git repository"
+            return 1
+        fi
+        _gwt_print "$GREEN" "Current worktrees:"
+        git worktree list
+        return 0
+    fi
+
+    # Check if we're in a git repository for branch operations
     if ! git rev-parse --git-dir > /dev/null 2>&1; then
         _gwt_print "$RED" "✗ Not in a git repository"
         return 1
     fi
 
-    # If no argument, list worktrees
-    if [[ -z "$1" ]]; then
-        _gwt_print "$GREEN" "Current worktrees:"
-        git worktree list
-        return
-    fi
-    
     local branch="$1"
     # Sanitize branch name for directory (replace / with -)
     local safe_name
