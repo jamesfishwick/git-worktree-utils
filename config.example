@@ -1,0 +1,114 @@
+# Git Worktree Utils - Example Configuration
+# Copy this file to: ${XDG_CONFIG_HOME:-$HOME/.config}/git-worktree-utils/config
+
+# ==============================================================================
+# DIRECTORY NAMING PATTERN
+# ==============================================================================
+
+# Controls how worktree directories are named
+# Variables:
+#   {base}   - Repository name (e.g., "myapp")
+#   {branch} - Sanitized branch name (e.g., "feature-auth")
+#
+# Default: "{base}-{branch}"
+GWT_DIR_PATTERN="{base}-{branch}"
+
+# Examples:
+# GWT_DIR_PATTERN="{branch}-{base}"           # feature-auth-myapp
+# GWT_DIR_PATTERN="wt-{base}-{branch}"        # wt-myapp-feature-auth
+# GWT_DIR_PATTERN="{base}/{branch}"           # myapp/feature-auth (nested)
+# GWT_DIR_PATTERN="worktrees/{base}/{branch}" # worktrees/myapp/feature-auth
+
+# ==============================================================================
+# AUTOMATIC CLEANUP
+# ==============================================================================
+
+# Automatically prune broken worktree references before each operation
+# Options: true | false
+# Default: true
+GWT_AUTO_PRUNE=true
+
+# When true: Silently cleans up broken references
+# When false: You must manually run "git worktree prune"
+
+# ==============================================================================
+# CONFIRMATION PROMPTS
+# ==============================================================================
+
+# Prompt for confirmation before deleting directories
+# Options: true | false
+# Default: true
+GWT_CONFIRM_DELETE=true
+
+# When true: Shows preview and asks "Delete? (y/N)"
+# When false: Automatically deletes without confirmation (use with caution!)
+
+# ==============================================================================
+# CLEANUP PATTERNS
+# ==============================================================================
+
+# Space-separated patterns for directories that wtclean should find
+# Uses standard shell globbing patterns (* matches any characters)
+# Default: "*-feature* *-hotfix* *-release* *-review* *-epic*"
+GWT_CLEANUP_PATTERNS="*-feature* *-hotfix* *-release* *-review* *-epic*"
+
+# The patterns match against sibling directories relative to your repo
+# For example, if your repo is at:
+#   /code/myapp
+#
+# These patterns will match:
+#   /code/myapp-feature-auth
+#   /code/myapp-hotfix-security
+#   /code/myapp-release-v2
+#   /code/myapp-review-pr-123
+#   /code/myapp-epic-redesign
+
+# Customize for your workflow:
+# GWT_CLEANUP_PATTERNS="*-feat-* *-fix-* *-wip-*"           # Short prefixes
+# GWT_CLEANUP_PATTERNS="*-feature-* *-bugfix-*"             # Specific types
+# GWT_CLEANUP_PATTERNS="worktrees/*"                        # Nested structure
+
+# ==============================================================================
+# COLORED OUTPUT
+# ==============================================================================
+
+# Enable or disable colored output
+# Options: true | false
+# Default: true
+GWT_USE_COLOR=true
+
+# When false: Plain text output (useful for scripting or piping)
+
+# ==============================================================================
+# EXAMPLE CONFIGURATIONS
+# ==============================================================================
+
+# --- Minimal Config (Recommended for Most Users) ---
+# GWT_DIR_PATTERN="{base}-{branch}"
+# GWT_AUTO_PRUNE=true
+
+# --- Paranoid Config (Maximum Safety) ---
+# GWT_CONFIRM_DELETE=true
+# GWT_AUTO_PRUNE=false
+
+# --- Fast Config (No Confirmations) ---
+# GWT_CONFIRM_DELETE=false
+# GWT_AUTO_PRUNE=true
+
+# --- Nested Structure Config ---
+# GWT_DIR_PATTERN="worktrees/{base}/{branch}"
+# GWT_CLEANUP_PATTERNS="worktrees/*"
+
+# --- Team Workflow Config (Feature Branches Only) ---
+# GWT_DIR_PATTERN="{base}-{branch}"
+# GWT_CLEANUP_PATTERNS="*-feature-* *-feat-*"
+# GWT_CONFIRM_DELETE=true
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+# - Configuration is optional - defaults work well for most users
+# - All settings can be overridden by creating this config file
+# - Config file is sourced as bash, so you can use bash syntax
+# - Changes take effect immediately (re-source your shell or start new terminal)
