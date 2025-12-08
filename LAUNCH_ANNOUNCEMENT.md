@@ -2,11 +2,11 @@
 
 ## Short Version (Twitter/X, 280 chars)
 
-🚀 Launching git-worktree-utils: A lightweight, zero-install worktree manager for bash enthusiasts.
+Launching git-worktree-utils: Lightweight worktree manager for bash users.
 
-Single script. Zero dependencies. Just source and go.
+Single script. Zero dependencies. Source and go.
 
-Perfect for dotfile minimalists who want simple git worktree management.
+For dotfile minimalists who want simple git worktree management.
 
 https://github.com/jamesfishwick/git-worktree-utils
 
@@ -16,19 +16,19 @@ https://github.com/jamesfishwick/git-worktree-utils
 
 **Launching git-worktree-utils: Lightweight Git Worktree Management for Bash Users**
 
-I built a minimal git worktree manager that solves one problem well: making git worktrees easy from the command line.
+I built a minimal git worktree manager that solves one problem: making git worktrees easy from the command line.
 
 **What it does:**
-- `wt feature/auth` - Create/switch to worktree (no more typing branch names twice)
+- `wt feature/auth` - Create/switch to worktree (no double-typing)
 - `wtlist` - See all worktrees with status
 - `wtclean` - Remove orphaned directories automatically
-- `wts` - Interactive switcher between worktrees
-- `wthelp` - Comprehensive built-in documentation
+- `wts` - Interactive switcher
+- `wthelp` - Built-in docs
 
 **Why it exists:**
-Git worktrees are powerful but have rough CLI UX. Tools like Branchyard offer great IDE integration, but I wanted something simpler for shell-based workflows.
+Git worktrees have rough CLI UX. Branchyard offers IDE integration, but I wanted something simpler for shell workflows.
 
-**Philosophy:**
+**Design:**
 - Single bash script (988 lines)
 - Zero dependencies (bash + git)
 - Source-based, not installed
@@ -40,11 +40,11 @@ Git worktrees are powerful but have rough CLI UX. Tools like Branchyard offer gr
 curl -fsSL https://raw.githubusercontent.com/jamesfishwick/git-worktree-utils/main/install.sh | bash
 ```
 
-Perfect for developers who value simplicity over features and want their tools to live alongside their dotfiles.
+For developers who value simplicity and want tools that live alongside dotfiles.
 
 **Links:**
 - GitHub: https://github.com/jamesfishwick/git-worktree-utils
-- [Blog post with full details](link-to-blog-post)
+- [Blog post](link-to-blog-post)
 
 ---
 
@@ -52,30 +52,30 @@ Perfect for developers who value simplicity over features and want their tools t
 
 **Show HN: git-worktree-utils – Lightweight worktree manager for bash users**
 
-I've been using git worktrees for years but found the native commands tedious. Type branch names twice, remember flags, manually clean up orphaned directories.
+I've used git worktrees for years but found native commands tedious. Type branch names twice, remember flags, manually clean orphaned directories.
 
-Instead of building a feature-rich tool like Branchyard (which is excellent if you want VS Code integration), I wanted something minimal for shell-based workflows.
+Branchyard is excellent if you want VS Code integration, but I wanted something minimal for shell workflows.
 
-git-worktree-utils is a single bash script that makes worktrees easy:
+git-worktree-utils is a single bash script:
 
 - `wt feature/auth` instead of `git worktree add ../path -b feature/auth`
 - Automatic directory naming with configurable patterns
-- Interactive switcher between worktrees
-- Cleanup automation for orphaned directories
-- Comprehensive help system built-in
+- Interactive switcher
+- Cleanup automation
+- Built-in help system
 
 Design principles:
 - Zero dependencies (bash + git)
 - Source-based, not installed (dotfile-friendly)
-- XDG-compliant configuration
+- XDG-compliant config
 - Cross-platform (macOS, Linux, BSD)
 - ~1000 lines, well-documented
 
-I'm not trying to compete with feature-rich tools. This is for minimalists who want one problem solved well.
+Not competing with feature-rich tools. For minimalists who want one problem solved well.
 
 GitHub: https://github.com/jamesfishwick/git-worktree-utils
 
-Happy to answer questions about design decisions, worktree workflows, or why I chose this approach!
+Questions about design decisions, worktree workflows, or implementation welcome.
 
 ---
 
@@ -83,11 +83,9 @@ Happy to answer questions about design decisions, worktree workflows, or why I c
 
 **[Tool] git-worktree-utils: Lightweight bash utilities for easier worktree management**
 
-I've been frustrated with git worktree's CLI UX for a while. The commands are verbose, you type branch names twice, and cleanup is manual. I wanted something simpler than existing tools.
+Git worktree CLI is verbose. Branch names typed twice, cleanup is manual. I wanted something simpler than existing tools.
 
-**Enter git-worktree-utils:**
-
-A single bash script that streamlines common worktree operations:
+**git-worktree-utils:**
 
 ```bash
 # Instead of: git worktree add ../myapp-feature-auth -b feature/auth
@@ -96,36 +94,35 @@ wt feature/auth
 # Instead of: git worktree list + cd ../path
 wts  # Interactive switcher
 
-# Instead of: manually finding and deleting old directories
+# Instead of: manually deleting old directories
 wtclean
 ```
 
-**Key features:**
+**Features:**
 - Automatic directory naming (configurable patterns)
 - Smart branch detection (local/remote/new)
-- Interactive worktree switcher
+- Interactive switcher
 - Orphaned directory cleanup
-- Comprehensive built-in help
-- Submodule auto-initialization
+- Built-in help
+- Submodule auto-init
 
-**Why not just use Branchyard?**
+**Why not Branchyard?**
+Branchyard has VS Code integration and git hooks. I wanted something lighter for shell workflows—source-based, dotfile-friendly, zero dependencies.
 
-Branchyard is excellent if you want VS Code integration and git hooks. I wanted something lighter for shell workflows - source-based, dotfile-friendly, zero dependencies.
-
-**Philosophy:**
+**Design:**
 - Solve one problem well
 - No build steps, no package managers
-- Single script you can read and understand
-- Perfect for dotfile enthusiasts
+- Single script you can read
+- Dotfile integration
 
-**Installation:**
+**Install:**
 ```bash
 curl -fsSL https://raw.githubusercontent.com/jamesfishwick/git-worktree-utils/main/install.sh | bash
 ```
 
 **Project:** https://github.com/jamesfishwick/git-worktree-utils
 
-Would love feedback from fellow worktree users! What pain points am I missing?
+Feedback from worktree users welcome. What pain points am I missing?
 
 ---
 
@@ -135,17 +132,15 @@ Would love feedback from fellow worktree users! What pain points am I missing?
 ---
 title: Introducing git-worktree-utils: Lightweight Worktree Management for Bash Users
 published: false
-description: A minimal, dotfile-friendly git worktree manager that solves one problem well
+description: A minimal, dotfile-friendly git worktree manager
 tags: git, bash, cli, opensource
 ---
 
 # Introducing git-worktree-utils: Lightweight Worktree Management for Bash Users
 
-Git worktrees are powerful, but the CLI experience leaves much to be desired. I built git-worktree-utils to fix that—a lightweight, bash-native tool that makes worktrees easy.
+Git worktrees are powerful, but the CLI is tedious. I built git-worktree-utils to fix that—a lightweight, bash-native tool.
 
 ## The Problem
-
-If you've used git worktrees, you know these pain points:
 
 ```bash
 # Too verbose
@@ -155,16 +150,13 @@ git worktree add ../myapp-feature-auth -b feature/auth
 git worktree add -b new-feature ../myapp-new-feature new-feature
 
 # Manual cleanup
-# You delete branches, directories stick around
-# Git doesn't clean up orphaned directories automatically
+# Delete branches, directories stick around
 ```
 
 ## The Solution
 
-git-worktree-utils simplifies everything:
-
 ```bash
-# One command, auto-detects everything
+# One command
 wt feature/auth
 
 # Interactive switcher
@@ -176,25 +168,24 @@ wtclean
 
 ## Why Another Tool?
 
-[Branchyard](https://github.com/SivaramPg/branchyard) exists and it's excellent. If you want VS Code integration, git hooks, and a feature-rich CLI, use Branchyard.
+[Branchyard](https://github.com/SivaramPg/branchyard) has VS Code integration, git hooks, feature-rich CLI. Use it if you want those.
 
-I wanted something different:
-- **Simpler** - Single bash script, no build step
-- **Dotfile-friendly** - Source it, don't install it
-- **Shell-native** - Built for bash/zsh power users
-- **Minimal** - Zero dependencies beyond bash + git
+I wanted:
+- Simpler - Single bash script
+- Dotfile-friendly - Source it, don't install
+- Shell-native - Built for terminal
+- Minimal - Zero dependencies
 
 ## Features
 
-### Smart Worktree Creation
+### Smart Creation
 
 ```bash
 wt feature/auth
-# Automatically:
-# - Creates ../myapp-feature-auth/
-# - Detects if branch is local/remote/new
-# - Initializes submodules if present
-# - Switches to the directory
+# Auto-detects local/remote/new
+# Creates ../myapp-feature-auth/
+# Initializes submodules
+# Switches directory
 ```
 
 ### Configurable Patterns
@@ -203,7 +194,7 @@ wt feature/auth
 # ~/.config/git-worktree-utils/config
 GWT_DIR_PATTERN="{base}-{branch}"           # myapp-feature-auth
 # GWT_DIR_PATTERN="{branch}"                 # feature-auth
-# GWT_DIR_PATTERN="worktrees/{base}/{branch}" # nested structure
+# GWT_DIR_PATTERN="worktrees/{base}/{branch}" # nested
 ```
 
 ### Interactive Switcher
@@ -211,12 +202,10 @@ GWT_DIR_PATTERN="{base}-{branch}"           # myapp-feature-auth
 ```bash
 wts
 
-# Select worktree to switch to:
+# Select worktree:
 #   1) /Users/dev/myapp [CURRENT]
 #   2) /Users/dev/myapp-feature-auth
-#   3) /Users/dev/myapp-hotfix-urgent
 # Enter number: 2
-# ✓ Switched to /Users/dev/myapp-feature-auth
 ```
 
 ### Smart Cleanup
@@ -224,164 +213,102 @@ wts
 ```bash
 wtclean
 
-# === Git Worktree Cleanup ===
-# → Pruning broken worktree references...
-# → Searching for orphaned directories...
-#
 # Found 3 orphaned directories:
 #   ../myapp-feature-old (458M)
 #   ../myapp-hotfix-merged (12M)
-#
-# Delete all orphaned directories? (y/N)
+# Delete all? (y/N)
 ```
 
-### Detailed Status
+### Built-in Help
 
 ```bash
-wtlist
-
-# === Git Worktrees ===
-# /Users/dev/myapp
-#   Branch: main
-#   Last commit: a1b2c3d Initial commit
-#
-# /Users/dev/myapp-feature-auth
-#   Branch: feature/auth
-#   Last commit: d4e5f6g Add login form
-#   Modified files: 2
+wthelp              # Overview
+wthelp wt           # Command details
+wthelp config       # Config reference
 ```
 
-## Installation
+## Install
 
 ```bash
-# One-line install
 curl -fsSL https://raw.githubusercontent.com/jamesfishwick/git-worktree-utils/main/install.sh | bash
-
-# Or manual
-mkdir -p ~/.config/git-worktree-utils
-curl -fsSL https://raw.githubusercontent.com/jamesfishwick/git-worktree-utils/main/git-worktree-utils.sh \
-  -o ~/.config/git-worktree-utils/git-worktree-utils.sh
-echo 'source ~/.config/git-worktree-utils/git-worktree-utils.sh' >> ~/.bashrc
 ```
 
 ## Design Philosophy
 
-**Solve one problem well.** Make git worktrees easy from the command line. Nothing more.
+Solve one problem well. Make git worktrees easy from the command line.
 
-- **Lightweight** - 988 lines of bash, that's it
-- **Zero dependencies** - Bash + git, nothing else
-- **Dotfile-friendly** - Source-based, lives with your dotfiles
-- **Shell-native** - Built for terminal workflows
-- **XDG-compliant** - Respects config directory standards
+- Lightweight - 988 lines of bash
+- Zero dependencies - Bash + git only
+- Dotfile-friendly - Lives with your dotfiles
+- Shell-native - Terminal workflows
+- XDG-compliant - Config standards
 
-## Real-World Workflows
+## Workflows
 
 ### Emergency Hotfix
 
 ```bash
-# Currently on feature branch
 wt hotfix/critical-security-fix
-# Instant clean environment
 # Fix, commit, push
-# cd - back to feature work
+cd -  # Back to feature
 ```
 
 ### Code Review
 
 ```bash
-wt pr/review-123
+wt pr/123
 # Test locally
-# When done: wtclean removes it
+wtclean  # Remove when done
 ```
 
 ### Parallel Development
 
 ```bash
-wt experiment/approach-a
-wt experiment/approach-b
-diff -r ../myapp-experiment-approach-a ../myapp-experiment-approach-b
-# Keep the better one, wtclean the other
+wt approach-a
+wt approach-b
+diff -r ../myapp-approach-*
 ```
-
-## Technical Details
-
-**Cross-platform:**
-- macOS (native stat)
-- Linux (native stat)
-- BSD (fallback mode)
-
-**Smart about:**
-- Spaces in paths (uses porcelain format)
-- Broken worktree references (auto-prunes)
-- Submodules (auto-initializes)
-- XDG compliance (follows standards)
-
-**Well-documented:**
-- Comprehensive inline documentation
-- Built-in help system (`wthelp`)
-- Example configuration
-- Troubleshooting guide
-
-## Contributing
-
-The project prioritizes:
-- Simplicity over features
-- Compatibility over cutting-edge
-- Shell-native over cross-language
-- Zero dependencies
-
-Open to contributions that align with these principles!
 
 ## Links
 
-- **GitHub:** https://github.com/jamesfishwick/git-worktree-utils
-- **License:** MIT
+- GitHub: https://github.com/jamesfishwick/git-worktree-utils
+- License: MIT
 
-## Conclusion
-
-If you value simplicity, want dotfile-friendly tools, and work primarily in the terminal, git-worktree-utils might be for you.
-
-It's not trying to be Branchyard. It's trying to be the minimal, bash-native worktree manager that solves one problem really well.
-
-Try it out and let me know what you think!
+Try it out.
 ```
 
 ---
 
 ## LinkedIn Version
 
-**Launching git-worktree-utils: A New Open Source Tool**
+**Launching git-worktree-utils: Open Source Git Worktree Manager**
 
-I'm excited to share git-worktree-utils, a lightweight git worktree manager I built to solve a daily workflow friction point.
+I'm sharing git-worktree-utils, a lightweight git worktree manager I built to solve daily workflow friction.
 
-**The Problem:**
-Git worktrees are powerful for parallel development, but the CLI experience is verbose and cleanup is manual. Existing tools are feature-rich but heavier than I needed.
+**Problem:**
+Git worktrees are powerful for parallel development, but the CLI is verbose and cleanup is manual. Existing tools are feature-rich but heavier than needed.
 
-**The Solution:**
-A single bash script (988 lines) that simplifies worktree management:
+**Solution:**
+Single bash script (988 lines) that simplifies worktree management:
 - One-command worktree creation
 - Automatic directory naming
 - Interactive switching
 - Smart cleanup
 
-**Design Philosophy:**
+**Design:**
 - Zero dependencies (bash + git only)
 - Dotfile-friendly (source-based)
 - Solve one problem well
 - Minimal over feature-rich
 
-**Perfect for:**
-Developers who value simplicity, work primarily in terminal environments, and prefer lightweight tools that integrate seamlessly with dotfiles.
+**For:**
+Developers who value simplicity, work in terminals, and prefer lightweight tools that integrate with dotfiles.
 
-**Key Learning:**
-Sometimes the best solution isn't the most feature-rich—it's the one that fits naturally into existing workflows without adding complexity.
+**Learning:**
+The best solution isn't the most feature-rich—it's the one that fits naturally into existing workflows without adding complexity.
 
-Open sourced under MIT license. Link in comments.
+Open sourced under MIT.
 
-#OpenSource #Git #DeveloperTools #Bash #SoftwareDevelopment
+#OpenSource #Git #DeveloperTools #Bash
 
----
-
-**Comments to include:**
-GitHub: https://github.com/jamesfishwick/git-worktree-utils
-Blog post: [link-to-blog-post]
+**Project:** https://github.com/jamesfishwick/git-worktree-utils

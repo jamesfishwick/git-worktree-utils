@@ -1,106 +1,83 @@
 # I Built a Lightweight Git Worktree Manager (Because I Couldn't Find One)
 
-*Why I created git-worktree-utils when Branchyard exists, and why "minimal" isn't a compromise—it's a feature.*
+Why I created git-worktree-utils when Branchyard exists, and why "minimal" isn't a compromise.
 
 ---
 
-## The Itch That Needed Scratching
+## The Problem
 
-I love git worktrees. The concept is brilliant: instead of constantly switching branches in one directory, you have multiple directories with different branches checked out simultaneously. No more stashing. No more losing IDE state. Clean separation of contexts.
+I use git worktrees regularly. Multiple branches checked out simultaneously in separate directories beats constant branch switching. No stashing, IDE state persists, contexts stay separated.
 
-But the CLI experience? Rough.
+But the CLI is tedious:
 
 ```bash
-# Create a worktree the native way
 git worktree add ../myapp-feature-auth -b feature/auth
-
-# Wait, did I just type the branch name twice?
-# And I have to remember to add -b for new branches?
-# And figure out the directory path myself?
+# Branch name typed twice, manual -b flag, path calculated by hand
 ```
 
-After months of this friction, I looked for tools to simplify it. I found [Branchyard](https://github.com/SivaramPg/branchyard)—and it's genuinely excellent. VS Code integration, git hooks, auto-cleanup on branch delete. Feature-rich and well-designed.
+After months of this, I looked for tools. [Branchyard](https://github.com/SivaramPg/branchyard) has VS Code integration, git hooks, auto-cleanup. Well-designed, feature-rich.
 
-But it felt... heavy for my needs. I wanted something simpler. Something that lived in my dotfiles. Something I could read in 20 minutes.
+Too heavy for me. I wanted something in my dotfiles. Something I could read in 20 minutes.
 
-So I built **git-worktree-utils**.
+So I built git-worktree-utils.
 
-## What It Does (In 30 Seconds)
+## What It Does
 
 ```bash
-# Create/switch to worktree (auto-detects local/remote/new branches)
-wt feature/auth
-
-# List all worktrees with status
-wtlist
-
-# Interactive switcher
-wts
-
-# Clean up orphaned directories
-wtclean
-
-# Comprehensive help
-wthelp
+wt feature/auth    # Create/switch to worktree
+wtlist             # List with status
+wts                # Interactive switcher
+wtclean            # Clean orphaned directories
+wthelp             # Built-in help
 ```
 
-That's it. Five commands. One file. Zero dependencies beyond bash and git.
+Five commands. One file. Bash + git only.
 
-## The Design Philosophy: Minimal Is a Feature
+## Design Decisions
 
-When I say "minimal," I don't mean "missing features." I mean **intentionally focused**.
+"Minimal" means intentionally focused, not feature-poor.
 
-### What git-worktree-utils IS:
-- ✅ A bash script (988 lines, well-documented)
-- ✅ Source-based (lives in `~/.config`, sourced in your shell)
-- ✅ XDG-compliant (respects your config directory standards)
-- ✅ Dotfile-friendly (check it into your dotfiles repo)
-- ✅ Cross-platform (macOS, Linux, BSD)
-- ✅ Zero dependencies (bash + git, that's it)
+**What it is:**
+- 988-line bash script
+- Source-based (lives in ~/.config)
+- XDG-compliant
+- Checked into dotfiles
+- Cross-platform (macOS, Linux, BSD)
+- Zero dependencies
 
-### What it's NOT:
-- ❌ A feature-rich alternative to Branchyard
-- ❌ Something that integrates with your IDE
-- ❌ A tool with git hook automation
-- ❌ Packaged software you install via package manager
+**What it's not:**
+- Feature-complete alternative to Branchyard
+- IDE-integrated
+- Git hook automated
+- Package manager distributed
 
-This isn't a limitation—**it's the point.**
+This is the design, not a limitation.
 
-## Why Choose Simplicity?
+## Why Simplicity Matters
 
-### 1. **You Can Actually Read It**
+### Readable
+988 lines of bash, comments included. Read it in 20 minutes. When it breaks, you can fix it. No black box.
 
-The entire codebase is 988 lines of bash. Comments included. You can read it in 20 minutes and understand exactly what it does.
-
-When something breaks (and something always breaks), you can fix it. No black box. No "well, it worked yesterday."
-
-### 2. **It Lives With Your Dotfiles**
-
-I manage my dotfiles in git. My shell config, my vim setup, my git aliases. Why should my worktree manager be different?
+### Dotfile Integration
+I manage dotfiles in git. Shell config, vim, git aliases. The worktree manager belongs there too.
 
 ```bash
-# In my dotfiles repo
+# In dotfiles repo
 .config/git-worktree-utils/git-worktree-utils.sh
 
-# In my ~/.zshrc
+# In ~/.zshrc
 source ~/.config/git-worktree-utils/git-worktree-utils.sh
 ```
 
-One repo. All my config. Synchronized across machines. No special installation.
+One repo, all config, synchronized across machines.
 
-### 3. **Zero Dependency Hell**
+### Zero Dependencies
+Bash and git. That's it. No Python, Node, Ruby, version conflicts, or 47-package `npm install`.
 
-It's bash. You have bash. It uses git commands. You have git.
+### Longevity
+Bash is stable. Git is stable. POSIX commands with platform fallbacks. Write once in 2025, runs in 2035.
 
-That's it. No Python runtime. No Node modules. No Ruby gems. No version conflicts. No `npm install` that pulls in 47 packages.
-
-### 4. **It Just Works (Forever)**
-
-Bash is stable. Git is stable. The script uses standard POSIX commands with platform-specific fallbacks.
-
-Write it once in 2025, it'll still work in 2035. No framework migrations. No deprecated APIs. No "please upgrade to v2."
-
-## The Features That Matter
+## Core Features
 
 ### Smart Worktree Creation
 
@@ -108,127 +85,104 @@ Write it once in 2025, it'll still work in 2035. No framework migrations. No dep
 wt feature/auth
 ```
 
-This one command:
-- Auto-detects if the branch is local, remote, or new
-- Creates directory with configurable pattern (`{base}-{branch}`)
-- Handles spaces in paths correctly (uses porcelain format)
-- Initializes submodules if present
-- Switches to the directory automatically
+Auto-detects local/remote/new branches. Creates `{base}-{branch}` directory. Handles paths with spaces (porcelain format). Initializes submodules. Switches directory.
 
-No flags to remember. No branch names typed twice. Just works.
+No flags. No double-typing branch names.
 
-### Configurable Directory Patterns
+### Configurable Patterns
 
 ```bash
 # ~/.config/git-worktree-utils/config
 GWT_DIR_PATTERN="{base}-{branch}"
 
-# Examples:
-# {base}-{branch}           → myapp-feature-auth
-# {branch}                  → feature-auth
-# worktrees/{base}/{branch} → worktrees/myapp/feature-auth
+# Options:
+# {base}-{branch}           -> myapp-feature-auth
+# {branch}                  -> feature-auth
+# worktrees/{base}/{branch} -> worktrees/myapp/feature-auth
 ```
 
-Your workflow, your structure. Not mine.
+Your workflow, your structure.
 
 ### Interactive Switcher
 
 ```bash
 $ wts
 
-Select worktree to switch to:
+Select worktree:
   1) /Users/dev/myapp [CURRENT]
   2) /Users/dev/myapp-feature-auth
   3) /Users/dev/myapp-hotfix-urgent
 
 Enter number (1-3): 2
-✓ Switched to /Users/dev/myapp-feature-auth
+Switched to /Users/dev/myapp-feature-auth
 ```
 
-Beats typing `cd ../myapp-whatever` every time.
-
-### Smart Cleanup
+### Cleanup Automation
 
 ```bash
 $ wtclean
 
-=== Git Worktree Cleanup ===
-→ Pruning broken worktree references...
-→ Searching for orphaned directories...
+Git Worktree Cleanup
+Pruning broken references...
+Searching for orphaned directories...
 
 Found 3 orphaned directories:
   ../myapp-feature-old (458M)
   ../myapp-hotfix-merged (12M)
   ../myapp-review-pr-123 (234M)
 
-Delete all orphaned directories? (y/N)
+Delete all? (y/N)
 ```
 
-Shows disk usage. Requires confirmation. Never touches active worktrees. Safe.
+Shows disk usage, requires confirmation, never touches active worktrees.
 
-### Comprehensive Help System
+### Built-in Help
 
 ```bash
-wthelp              # General overview
-wthelp wt           # Detailed command help
-wthelp config       # Configuration reference
-wthelp workflows    # Real-world examples
+wthelp              # Overview
+wthelp wt           # Command details
+wthelp config       # Config reference
+wthelp workflows    # Examples
 ```
 
-Documentation built into the tool. No "go read the GitHub README." Help is always one command away.
+Help built into the tool. No "read the GitHub README."
 
-## Real-World Workflows
+## Workflows
 
 ### Emergency Hotfix
 
-You're deep in feature development. Production is on fire.
-
 ```bash
 wt hotfix/critical-security-fix
-# Instant clean environment on main branch
-# Fix the bug
-git push origin hotfix/critical-security-fix
-# Back to feature work
-cd -
+# Clean environment on main
+# Fix, commit, push
+cd -  # Back to feature work
 ```
 
-Your feature work? Untouched. Exactly where you left it.
+Feature work untouched. Exactly where you left it.
 
 ### Code Review
 
 ```bash
-wt pr/review-123
-# Test the PR locally
-# Leave comments
-# When done:
+wt pr/123
+# Test locally
 cd ../myapp
-wtclean  # Removes the review worktree
+wtclean  # Remove review worktree
 ```
-
-No git juggling. No stashing. Just a clean review environment.
 
 ### Parallel Approaches
 
 ```bash
-wt experiment/approach-a
-# Implement solution A
-
-wt experiment/approach-b
-# Implement solution B
-
-diff -r ../myapp-experiment-approach-a ../myapp-experiment-approach-b
-# Compare, pick the winner, wtclean the loser
+wt approach-a
+wt approach-b
+diff -r ../myapp-approach-a ../myapp-approach-b
+# Keep winner, clean loser
 ```
 
-Try multiple approaches without branches conflicting. Keep the best. Delete the rest.
+## Technical Details
 
-## Technical Decisions (The Interesting Parts)
+### Porcelain Format
 
-### Porcelain Format for Robustness
-
-Git worktree's default output isn't designed for parsing. Paths can have spaces. Branch names can have newlines (don't ask).
-
-Solution: Use `git worktree list --porcelain` and parse it properly:
+Git's default output isn't parseable. Paths can have spaces. Branch names can have newlines.
 
 ```bash
 while IFS= read -r line || [[ -n "$line" ]]; do
@@ -243,20 +197,20 @@ while IFS= read -r line || [[ -n "$line" ]]; do
 done < <(git worktree list --porcelain)
 ```
 
-Rock solid. Handles edge cases. Doesn't break on weird paths.
+Handles edge cases correctly.
 
-### XDG Compliance (With Fallback)
+### XDG Compliance
 
 ```bash
 GWT_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 GWT_CONFIG_DIR="${GWT_CONFIG_HOME}/git-worktree-utils"
 ```
 
-Respects `XDG_CONFIG_HOME` if set. Falls back to `~/.config` if not. Works everywhere.
+Respects XDG_CONFIG_HOME, falls back to ~/.config.
 
-### Platform-Specific Stat Commands
+### Platform Detection
 
-macOS uses BSD `stat`. Linux uses GNU `stat`. They have different flags.
+macOS uses BSD stat. Linux uses GNU stat. Different flags.
 
 ```bash
 case "$(uname -s)" in
@@ -267,81 +221,49 @@ case "$(uname -s)" in
         stat -c "%Y %n" "$path"
         ;;
     *)
-        # Fallback for other systems
+        # Fallback
         find "$dir" -mindepth 1 -maxdepth 1 -print
         ;;
 esac
 ```
 
-Write once, run anywhere (with bash and git).
+### Namespace Convention
 
-### Helper Function Pattern
-
-Every helper function is prefixed `_gwt_`. Private by convention. Clear namespace.
+All helpers prefixed `_gwt_`. Clear, no conflicts.
 
 ```bash
 _gwt_print()                   # Colored output
-_gwt_get_worktree_paths()      # Parse worktree paths
-_gwt_list_recent()             # Platform-aware file listing
-_gwt_display_worktree_info()   # Comprehensive worktree display
+_gwt_get_worktree_paths()      # Parse paths
+_gwt_list_recent()             # File listing
+_gwt_display_worktree_info()   # Info display
 ```
 
-No conflicts with user's environment. Easy to grep.
+## What I Learned
 
-## What I Learned Building This
+### Minimal Doesn't Mean Incomplete
+Five commands solve 95% of worktree pain. The right features, thoughtfully designed.
 
-### 1. **Minimal ≠ Incomplete**
+### Documentation Is Core
+Built-in help isn't optional. Help should be always available, not "just read the docs."
 
-You don't need 50 features to solve a problem well. You need the RIGHT features, thoughtfully designed.
+### Bash Works
+Despite quirks, bash is perfect for system utilities. No runtime, no dependencies, runs everywhere. Fast, debuggable.
 
-Five commands. Each does one thing well. Together they solve 95% of worktree pain points.
+### Positioning Matters
+"I built a tool" isn't enough. Answer: Why does this exist when X exists? Who is this for? What's the philosophy?
 
-### 2. **Documentation Is a Feature**
+## vs. Branchyard
 
-The built-in help system (`wthelp`) isn't an afterthought—it's a core feature. Help should be comprehensive, accessible, and always available.
+Use [Branchyard](https://github.com/SivaramPg/branchyard) if you want VS Code integration, git hooks, auto-cleanup on branch delete, feature-rich CLI.
 
-No "just read the docs." The docs ARE the tool.
+Use git-worktree-utils if you want dotfile-friendly, zero dependencies, source-based config, minimal shell-native design, readable in 20 minutes.
 
-### 3. **Bash Is Underrated**
+Different tools for different workflows.
 
-Yes, it has quirks. Yes, quoting is annoying. But for system utilities? It's perfect.
-
-No runtime. No dependencies. Runs everywhere. Fast. Debuggable. Done.
-
-### 4. **Open Source Needs Positioning**
-
-"I built a tool" isn't enough. You need to answer:
-- Why does this exist when X exists?
-- Who is this for?
-- What's the philosophy?
-
-Being honest about scope isn't weakness—it's clarity.
-
-## Why Not Just Use Branchyard?
-
-**You should!** If you want:
-- VS Code workspace integration
-- Git hook automation
-- Auto-cleanup on branch delete
-- Feature-rich CLI with personality
-
-Branchyard is excellent. Use it.
-
-But if you want:
-- Dotfile-friendly tool
-- Zero dependencies
-- Source-based configuration
-- Minimal, shell-native design
-- Something you can read in 20 minutes
-
-Then git-worktree-utils might be your thing.
-
-**Different tools for different workflows. Both are valid.**
-
-## Try It
+## Install
 
 ```bash
-# One-line install
+# One-line
 curl -fsSL https://raw.githubusercontent.com/jamesfishwick/git-worktree-utils/main/install.sh | bash
 
 # Or inspect first
@@ -352,71 +274,53 @@ chmod +x install.sh
 
 **Project:** https://github.com/jamesfishwick/git-worktree-utils
 **License:** MIT
-**Lines of Code:** 988 (including comments and docs)
-**Dependencies:** bash + git
+**Lines:** 988
 
 ## Final Thoughts
 
-Building git-worktree-utils taught me that "minimal" is a design choice, not a limitation.
+"Minimal" is a design choice, not a limitation.
 
-Sometimes the best tool isn't the most feature-rich. It's the one that:
-- Solves your specific problem
-- Integrates seamlessly into your workflow
-- You can understand, modify, and maintain
-- Does one thing really, really well
+The best tool isn't the most feature-rich. It's the one that solves your problem, integrates into your workflow, and you can understand and maintain.
 
-For me, that's a 988-line bash script I can keep in my dotfiles forever.
-
-What's your version of "minimal"? I'd love to hear about tools you've built that prioritize simplicity.
+For me, that's a 988-line bash script in my dotfiles.
 
 ---
 
-*Questions? Feedback? Found a bug? [Open an issue](https://github.com/jamesfishwick/git-worktree-utils/issues) or let me know in the comments.*
+**Author:** [James Fishwick](https://github.com/jamesfishwick)
+**Published:** December 2025
 
----
-
-## Appendix: Quick Reference
+## Quick Reference
 
 ### Commands
 
 ```bash
-wt [branch]        # Create/switch to worktree
-wtlist             # Detailed worktree info
-wtclean            # Clean up orphaned directories
-wts                # Interactive switcher
-wthelp [topic]     # Comprehensive help
+wt [branch]        # Create/switch
+wtlist             # Detailed info
+wtclean            # Clean orphans
+wts                # Interactive switch
+wthelp [topic]     # Help
 ```
 
-### Configuration
+### Config
 
 ```bash
 # ~/.config/git-worktree-utils/config
-GWT_DIR_PATTERN="{base}-{branch}"              # Directory naming
-GWT_AUTO_PRUNE=true                            # Auto-prune broken refs
-GWT_CONFIRM_DELETE=true                        # Confirm before delete
-GWT_CLEANUP_PATTERNS="*-feature* *-hotfix*"    # Cleanup patterns
-GWT_USE_COLOR=true                             # Colored output
+GWT_DIR_PATTERN="{base}-{branch}"
+GWT_AUTO_PRUNE=true
+GWT_CONFIRM_DELETE=true
+GWT_CLEANUP_PATTERNS="*-feature* *-hotfix*"
+GWT_USE_COLOR=true
 ```
 
-### Common Workflows
+### Workflows
 
-**Emergency hotfix:**
 ```bash
-wt hotfix/urgent && fix-the-bug && git push && cd -
-```
+# Emergency hotfix
+wt hotfix/urgent && fix && git push && cd -
 
-**Code review:**
-```bash
-wt pr/123 && test-locally && cd ../myapp && wtclean
-```
+# Code review
+wt pr/123 && test && cd ../myapp && wtclean
 
-**Parallel approaches:**
-```bash
+# Parallel approaches
 wt approach-a && wt approach-b && diff -r ../myapp-approach-*
 ```
-
----
-
-*Published: December 2025*
-*Author: [James Fishwick](https://github.com/jamesfishwick)*
-*Tags: #git #bash #cli #opensource #devtools*

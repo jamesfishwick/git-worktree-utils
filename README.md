@@ -21,6 +21,7 @@ Traditional:                  With Worktrees:
 ```
 
 **Benefits:**
+
 - No stashing needed when switching contexts
 - Multiple branches tested simultaneously
 - IDE state preserved per branch
@@ -31,11 +32,12 @@ Traditional:                  With Worktrees:
 **vs. Branchyard:** If you want VS Code integration, git hooks, and a feature-rich CLI, use [Branchyard](https://github.com/SivaramPg/branchyard)—it's excellent.
 
 **Choose git-worktree-utils if you value:**
-- 🪶 **Lightweight** - Single bash script (988 lines), zero dependencies
-- 🔧 **Dotfile-friendly** - Source-based, not installed binary
-- 📚 **Shell-native** - Built for bash/zsh power users
-- ⚙️ **Simple** - No build step, no package manager, no runtime
-- 🌍 **XDG-compliant** - Respects your config directory standards
+
+- **Lightweight** - Single bash script (988 lines), zero dependencies
+- **Dotfile-friendly** - Source-based, not installed binary
+- **Shell-native** - Built for bash/zsh power users
+- **Simple** - No build step, no package manager, no runtime
+- **XDG-compliant** - Respects your config directory standards
 
 **Philosophy:** Solve one problem well. Make git worktrees easy from the command line. Nothing more.
 
@@ -54,6 +56,7 @@ chmod +x install.sh
 ```
 
 The installer will:
+
 - Download scripts to `~/.config/git-worktree-utils/`
 - Offer to add source line to your shell config
 - Provide example configuration
@@ -126,6 +129,7 @@ wt hotfix/security-patch    # Emergency hotfix in clean environment
 ```
 
 **Behavior:**
+
 - Automatically creates sibling directories with pattern `{base}-{branch}`
 - Handles local branches, remote branches, and new branches intelligently
 - Auto-initializes submodules if present
@@ -224,18 +228,21 @@ GWT_USE_COLOR=true
 ### Example Configurations
 
 **Minimal (recommended)**
+
 ```bash
 GWT_DIR_PATTERN="{base}-{branch}"
 GWT_AUTO_PRUNE=true
 ```
 
 **Fast (no confirmations)**
+
 ```bash
 GWT_CONFIRM_DELETE=false
 GWT_AUTO_PRUNE=true
 ```
 
 **Nested structure**
+
 ```bash
 GWT_DIR_PATTERN="worktrees/{base}/{branch}"
 GWT_CLEANUP_PATTERNS="worktrees/*"
@@ -333,22 +340,26 @@ wtclean
 ## Troubleshooting
 
 ### "Directory already exists"
+
 ```bash
 wtclean  # Will detect and offer removal
 ```
 
 ### "Branch already exists"
+
 ```bash
 wt existing-branch  # Just checks it out
 ```
 
 ### Worktree in broken state
+
 ```bash
 git worktree prune
 wtclean
 ```
 
 ### After moving repository
+
 ```bash
 git worktree repair
 ```
@@ -356,6 +367,7 @@ git worktree repair
 ## Contributing
 
 Contributions welcome! This project prioritizes:
+
 - **Simplicity** - Keep it lightweight and bash-native
 - **Compatibility** - Support macOS, Linux, BSD
 - **Zero dependencies** - Bash + git only
