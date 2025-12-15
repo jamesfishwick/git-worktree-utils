@@ -18,9 +18,12 @@ TEST_REPO="${TEST_DIR}/test-repo"
 TESTS_PASSED=0
 TESTS_FAILED=0
 
-# Source the script
+# Source the script and help
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/git-worktree-utils.sh"
+
+# Disable confirmations for all tests
+export GWT_CONFIRM_DELETE=false
 
 # Helper functions
 print_color() {
@@ -35,12 +38,12 @@ test_start() {
 
 test_pass() {
     print_color "$GREEN" "  ✓ PASS: $1"
-    ((TESTS_PASSED++))
+    ((++TESTS_PASSED)) || true
 }
 
 test_fail() {
     print_color "$RED" "  ✗ FAIL: $1"
-    ((TESTS_FAILED++))
+    ((++TESTS_FAILED)) || true
 }
 
 cleanup() {
@@ -136,9 +139,6 @@ test_start "Handle existing directory"
 mkdir -p "../test-repo-conflict-branch"
 echo "existing file" > "../test-repo-conflict-branch/existing.txt"
 
-# Set confirmation to false for testing
-export GWT_CONFIRM_DELETE=false
-
 if wt conflict-branch > /dev/null 2>&1; then
     if [[ ! -f "../test-repo-conflict-branch/existing.txt" ]]; then
         test_pass "Handled directory conflict"
@@ -166,14 +166,13 @@ fi
 # Test 6: Cleanup orphaned directories
 test_start "Clean orphaned directories"
 
-# Create orphaned directory
-mkdir -p "../test-repo-orphan-branch"
-echo "orphan" > "../test-repo-orphan-branch/file.txt"
+# Create orphaned directory (must match cleanup patterns like *-feature*)
+mkdir -p "../test-repo-feature-orphan"
+echo "orphan" > "../test-repo-feature-orphan/file.txt"
 
 # Run cleanup
-export GWT_CONFIRM_DELETE=false
 if wtclean > /dev/null 2>&1; then
-    if [[ ! -d "../test-repo-orphan-branch" ]]; then
+    if [[ ! -d "../test-repo-feature-orphan" ]]; then
         test_pass "Cleaned orphaned directory"
     else
         test_fail "Orphaned directory still exists"
