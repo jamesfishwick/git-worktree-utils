@@ -102,7 +102,7 @@ print_color "$GREEN" "✓ Shell config: $SHELL_RC"
 print_color "$YELLOW" "→ Creating configuration directory..."
 mkdir -p "$INSTALL_DIR"
 
-# Copy main script
+# Copy main script and help file
 print_color "$YELLOW" "→ Installing scripts..."
 if [[ -f "$SCRIPT_FILE" ]]; then
     if command -v install >/dev/null 2>&1; then
@@ -115,6 +115,19 @@ if [[ -f "$SCRIPT_FILE" ]]; then
 else
     print_color "$RED" "✗ Cannot find git-worktree-utils.sh"
     exit 1
+fi
+
+# Copy help file
+HELP_FILE="${SCRIPT_DIR}/git-worktree-utils-help.sh"
+if [[ -f "$HELP_FILE" ]]; then
+    if command -v install >/dev/null 2>&1; then
+        install -m 0644 "$HELP_FILE" "${INSTALL_DIR}/git-worktree-utils-help.sh"
+    else
+        cp "$HELP_FILE" "$INSTALL_DIR/"
+    fi
+    print_color "$GREEN" "✓ Installed git-worktree-utils-help.sh"
+else
+    print_color "$YELLOW" "⚠️  Help file not found (help will be unavailable)"
 fi
 
 # Create default config if it doesn't exist
