@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# Git Worktree Utils - Pre-push Hook
+# Runs full test suite before push
+
+set -e
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+echo -e "${YELLOW}Running pre-push checks...${NC}"
+
+# Run full test suite
+if [[ -f "test.sh" ]]; then
+    echo -e "${YELLOW}→ Running test suite...${NC}"
+    if ! ./test.sh; then
+        echo -e "${RED}✗ Tests failed${NC}"
+        echo -e "${YELLOW}Fix failing tests or use 'git push --no-verify' to skip${NC}"
+        exit 1
+    fi
+    echo -e "${GREEN}✓ All tests passed${NC}"
+else
+    echo -e "${YELLOW}⚠️  test.sh not found (skipping tests)${NC}"
+fi
+
+echo -e "${GREEN}✓ Pre-push checks passed${NC}"
+exit 0
