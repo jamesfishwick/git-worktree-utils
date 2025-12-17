@@ -1,16 +1,35 @@
-# User's personal config (don't commit)
-config
+# Test artifacts
+/tmp/
+test-output/
+*.test
+.testhome/
 
-# macOS
-.DS_Store
-
-# Editor files
+# Backup files
+*.backup
+*.backup.*
+*.tmp
 *.swp
 *.swo
 *~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
 .vscode/
 .idea/
+*.sublime-*
 
-# Temporary files
-*.tmp
-*.bak
+# Logs
+*.log
+
+# Distribution
+dist/
+build/
+
+# Development/Documentation
+claudedocs/
+.claude/
+*.ai
+*.llm

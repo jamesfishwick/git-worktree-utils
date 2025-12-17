@@ -94,28 +94,28 @@ source ~/dotfiles/git-worktree-utils/git-worktree-utils.sh
 
 ```bash
 # List existing worktrees
-wt
+gwt
 
 # Create/switch to worktree for branch
-wt feature/new-login
+gwt feature/new-login
 
 # List detailed worktree info
-wtlist
+gwtlist
 
 # Clean up orphaned directories
-wtclean
+gwtclean
 
 # Interactive worktree switcher
-wts
+gwts
 
 # Get help
-wthelp
-wthelp wt        # Detailed help for specific command
+gwthelp
+gwthelp gwt        # Detailed help for specific command
 ```
 
 ## Commands
 
-### `wt [branch]`
+### `gwt [branch]`
 
 Create or switch to a worktree for the specified branch.
 
@@ -123,9 +123,9 @@ Create or switch to a worktree for the specified branch.
 **With branch name**: Creates/switches to worktree directory
 
 ```bash
-wt                          # List worktrees
-wt feature/auth             # Create worktree for feature/auth
-wt hotfix/security-patch    # Emergency hotfix in clean environment
+gwt                          # List worktrees
+gwt feature/auth             # Create worktree for feature/auth
+gwt hotfix/security-patch    # Emergency hotfix in clean environment
 ```
 
 **Behavior:**
@@ -136,12 +136,12 @@ wt hotfix/security-patch    # Emergency hotfix in clean environment
 - Prunes broken worktree references (configurable)
 - Warns about orphaned directories with cleanup options
 
-### `wtlist`
+### `gwtlist`
 
 Display detailed information about all worktrees including branch, last commit, and modified file count.
 
 ```bash
-wtlist
+gwtlist
 
 # Example output:
 # === Git Worktrees ===
@@ -155,12 +155,12 @@ wtlist
 #   Modified files: 2
 ```
 
-### `wtclean`
+### `gwtclean`
 
 Clean up orphaned directories and broken worktree references.
 
 ```bash
-wtclean
+gwtclean
 
 # Interactive cleanup with disk usage display:
 # === Git Worktree Cleanup ===
@@ -174,12 +174,12 @@ wtclean
 # Delete all orphaned directories? (y/N)
 ```
 
-### `wts`
+### `gwts`
 
 Interactive numbered menu for quickly switching between worktrees.
 
 ```bash
-wts
+gwts
 
 # Select worktree to switch to:
 #   1) /Users/dev/myapp [CURRENT]
@@ -190,15 +190,15 @@ wts
 # ✓ Switched to /Users/dev/myapp-feature-auth
 ```
 
-### `wthelp [topic]`
+### `gwthelp [topic]`
 
 Display comprehensive help information.
 
 ```bash
-wthelp              # General overview
-wthelp wt           # Detailed help for wt command
-wthelp config       # Configuration reference
-wthelp workflows    # Common workflow examples
+gwthelp              # General overview
+gwthelp gwt           # Detailed help for wt command
+gwthelp config       # Configuration reference
+gwthelp workflows    # Common workflow examples
 ```
 
 ## Configuration
@@ -218,7 +218,7 @@ GWT_AUTO_PRUNE=true
 # Prompt for confirmation before deleting directories
 GWT_CONFIRM_DELETE=true
 
-# Patterns for directories that wtclean should find
+# Patterns for directories that gwtclean should find
 GWT_CLEANUP_PATTERNS="*-feature* *-hotfix* *-release* *-review* *-epic*"
 
 # Enable colored output
@@ -254,7 +254,7 @@ GWT_CLEANUP_PATTERNS="worktrees/*"
 
 ```bash
 # Start new feature
-wt feature/user-profile
+gwt feature/user-profile
 
 # Work on feature...
 # Commit, push when ready
@@ -262,7 +262,7 @@ git push origin feature/user-profile
 
 # Create PR, merge, then cleanup
 cd ../myapp  # Back to main
-wtclean      # Remove feature worktree
+gwtclean      # Remove feature worktree
 ```
 
 ### Emergency Hotfix
@@ -271,7 +271,7 @@ wtclean      # Remove feature worktree
 # Currently working on feature branch
 # Emergency bug reported!
 
-wt hotfix/critical-security-fix  # Instant clean environment
+gwt hotfix/critical-security-fix  # Instant clean environment
 # Fix bug, commit, push
 git push origin hotfix/critical-security-fix
 
@@ -284,7 +284,7 @@ cd ../myapp-feature-xyz
 
 ```bash
 # Review colleague's PR
-wt pr/review-123
+gwt pr/review-123
 
 # Run tests, make comments, test locally
 npm test
@@ -292,24 +292,24 @@ npm test
 
 # Done reviewing
 cd ../myapp
-wtclean  # Remove review worktree
+gwtclean  # Remove review worktree
 ```
 
 ### Parallel Approaches
 
 ```bash
 # Try two different solutions
-wt experiment/approach-a
+gwt experiment/approach-a
 # Implement solution A...
 
-wt experiment/approach-b
+gwt experiment/approach-b
 # Implement solution B...
 
 # Compare implementations
 diff -r ../myapp-experiment-approach-a ../myapp-experiment-approach-b
 
 # Keep the better one, cleanup the other
-wtclean
+gwtclean
 ```
 
 ## Architecture
@@ -324,10 +324,10 @@ wtclean
 
 - **Main Commands** (`wt*`): User-facing functions
   - `wt`: Core worktree creation/switching
-  - `wtlist`: Detailed worktree listing
-  - `wtclean`: Cleanup utility
-  - `wts`: Interactive switcher
-  - `wthelp`: Help system
+  - `gwtlist`: Detailed worktree listing
+  - `gwtclean`: Cleanup utility
+  - `gwts`: Interactive switcher
+  - `gwthelp`: Help system
 
 ### Design Principles
 
@@ -342,20 +342,20 @@ wtclean
 ### "Directory already exists"
 
 ```bash
-wtclean  # Will detect and offer removal
+gwtclean  # Will detect and offer removal
 ```
 
 ### "Branch already exists"
 
 ```bash
-wt existing-branch  # Just checks it out
+gwt existing-branch  # Just checks it out
 ```
 
 ### Worktree in broken state
 
 ```bash
 git worktree prune
-wtclean
+gwtclean
 ```
 
 ### After moving repository
