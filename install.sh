@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 # Git Worktree Utils - Installation Script
 
 # Safer shell options (portable across bash/zsh)

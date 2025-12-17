@@ -197,7 +197,7 @@ fi
 # Test 8: Switch to existing worktree
 test_start "Switch to existing worktree"
 if wt feature/test-branch > /dev/null 2>&1; then
-    if [[ "$(basename $(pwd))" == "test-repo-feature-test-branch" ]]; then
+    if [[ "$(basename "$(pwd)")" == "test-repo-feature-test-branch" ]]; then
         test_pass "Switched to existing worktree"
     else
         test_fail "Did not switch to correct directory"
