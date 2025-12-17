@@ -54,11 +54,14 @@ cleanup() {
 # Set up test environment
 setup() {
     print_color "$YELLOW" "Setting up test environment..."
-    
+
+    # Unset git environment variables to ensure clean test environment
+    unset GIT_DIR GIT_WORK_TREE GIT_INDEX_FILE
+
     # Create test directory
     mkdir -p "$TEST_DIR"
     cd "$TEST_DIR"
-    
+
     # Create test repository
     mkdir "$TEST_REPO"
     cd "$TEST_REPO"
@@ -209,7 +212,10 @@ fi
 
 # Test 9: Error handling outside git repo
 test_start "Error handling outside git repo"
-cd /tmp
+# Create truly isolated non-git directory
+NON_GIT_DIR="${TEST_DIR}/non-git-test"
+mkdir -p "$NON_GIT_DIR"
+cd "$NON_GIT_DIR"
 if ! wt test-branch 2>&1 | grep -q "Not in a git repository"; then
     test_fail "Did not detect non-git directory"
 else
