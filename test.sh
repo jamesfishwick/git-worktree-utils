@@ -93,7 +93,7 @@ setup
 
 # Test 1: List worktrees in empty repo
 test_start "List worktrees (empty)"
-if output=$(wt 2>&1); then
+if output=$(gwt 2>&1); then
     if echo "$output" | grep -q "test-repo"; then
         test_pass "Listed main worktree"
     else
@@ -105,7 +105,7 @@ fi
 
 # Test 2: Create worktree for new branch
 test_start "Create worktree for new branch"
-if wt feature/test-branch > /dev/null 2>&1; then
+if gwt feature/test-branch > /dev/null 2>&1; then
     if [[ -d "../test-repo-feature-test-branch" ]]; then
         test_pass "Created worktree directory"
     else
@@ -126,7 +126,7 @@ git add test.txt
 git commit -m "Test commit" 2>/dev/null
 git checkout main 2>/dev/null
 
-if wt existing-branch > /dev/null 2>&1; then
+if gwt existing-branch > /dev/null 2>&1; then
     if [[ -f "../test-repo-existing-branch/test.txt" ]]; then
         test_pass "Checked out existing branch correctly"
     else
@@ -142,7 +142,7 @@ test_start "Handle existing directory"
 mkdir -p "../test-repo-conflict-branch"
 echo "existing file" > "../test-repo-conflict-branch/existing.txt"
 
-if wt conflict-branch > /dev/null 2>&1; then
+if gwt conflict-branch > /dev/null 2>&1; then
     if [[ ! -f "../test-repo-conflict-branch/existing.txt" ]]; then
         test_pass "Handled directory conflict"
     else
@@ -155,7 +155,7 @@ fi
 
 # Test 5: List all worktrees
 test_start "List multiple worktrees"
-if output=$(wt 2>&1); then
+if output=$(gwt 2>&1); then
     worktree_count=$(echo "$output" | grep -c "test-repo")
     if [[ $worktree_count -ge 3 ]]; then
         test_pass "Listed all worktrees ($worktree_count found)"
@@ -174,7 +174,7 @@ mkdir -p "../test-repo-feature-orphan"
 echo "orphan" > "../test-repo-feature-orphan/file.txt"
 
 # Run cleanup
-if wtclean > /dev/null 2>&1; then
+if gwtclean > /dev/null 2>&1; then
     if [[ ! -d "../test-repo-feature-orphan" ]]; then
         test_pass "Cleaned orphaned directory"
     else
@@ -186,7 +186,7 @@ fi
 
 # Test 7: Worktree with complex branch names
 test_start "Complex branch names"
-if wt feature/user-auth/oauth-2.0 > /dev/null 2>&1; then
+if gwt feature/user-auth/oauth-2.0 > /dev/null 2>&1; then
     if [[ -d "../test-repo-feature-user-auth-oauth-2.0" ]]; then
         test_pass "Handled complex branch name"
     else
@@ -199,7 +199,7 @@ fi
 
 # Test 8: Switch to existing worktree
 test_start "Switch to existing worktree"
-if wt feature/test-branch > /dev/null 2>&1; then
+if gwt feature/test-branch > /dev/null 2>&1; then
     if [[ "$(basename "$(pwd)")" == "test-repo-feature-test-branch" ]]; then
         test_pass "Switched to existing worktree"
     else
@@ -216,7 +216,7 @@ test_start "Error handling outside git repo"
 NON_GIT_DIR="${TEST_DIR}/non-git-test"
 mkdir -p "$NON_GIT_DIR"
 cd "$NON_GIT_DIR"
-if ! wt test-branch 2>&1 | grep -q "Not in a git repository"; then
+if ! gwt test-branch 2>&1 | grep -q "Not in a git repository"; then
     test_fail "Did not detect non-git directory"
 else
     test_pass "Correctly detected non-git directory"
@@ -225,7 +225,7 @@ cd "$TEST_REPO"
 
 # Test 10: Detailed list function
 test_start "Detailed worktree list"
-if output=$(wtlist 2>&1); then
+if output=$(gwtlist 2>&1); then
     if echo "$output" | grep -q "Branch:"; then
         test_pass "Detailed list shows branch info"
     else

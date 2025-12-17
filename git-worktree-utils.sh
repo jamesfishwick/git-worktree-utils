@@ -78,10 +78,10 @@ _gwt_list_recent() {
 }
 
 # Main worktree function
-wt() {
+gwt() {
     # Handle --help flag first, before any other checks
     if [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]; then
-        wthelp wt
+        gwthelp gwt
         return 0
     fi
 
@@ -211,10 +211,10 @@ wt() {
 }
 
 # Cleanup function for orphaned directories and broken worktrees
-wtclean() {
+gwtclean() {
     # Handle --help flag
     if [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]; then
-        wthelp wtclean
+        gwthelp gwtclean
         return
     fi
 
@@ -321,10 +321,10 @@ wtclean() {
 }
 
 # List worktrees with additional information
-wtlist() {
+gwtlist() {
     # Handle --help flag
     if [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]; then
-        wthelp wtlist
+        gwthelp gwtlist
         return
     fi
 
@@ -421,10 +421,10 @@ wtlist() {
 }
 
 # Quick switch between worktrees
-wts() {
+gwts() {
     # Handle --help flag
     if [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]; then
-        wthelp wts
+        gwthelp gwts
         return
     fi
 

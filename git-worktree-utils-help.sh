@@ -3,22 +3,22 @@
 # Sourced by git-worktree-utils.sh
 
 # Help function
-wthelp() {
+gwthelp() {
     local cmd="${1:-}"
 
     if [[ -n "$cmd" ]]; then
         case "$cmd" in
-            wt)
+            gwt)
                 cat << 'EOF'
-wt - Create and manage git worktrees
+gwt - Create and manage git worktrees
 
 USAGE:
-  wt                    List all worktrees
-  wt <branch>           Create/switch to worktree for branch
-  wt --help            Show this help
+  gwt                    List all worktrees
+  gwt <branch>           Create/switch to worktree for branch
+  gwt --help            Show this help
 
 DESCRIPTION:
-  The wt command intelligently manages git worktrees by creating sibling
+  The gwt command intelligently manages git worktrees by creating sibling
   directories with standardized naming. It automatically handles:
 
   - New branches (creates them)
@@ -32,42 +32,42 @@ DIRECTORY NAMING:
   By default, worktrees are created as sibling directories using the pattern:
     {base}-{branch}
 
-  Example: If you're in /code/myapp and run "wt feature/auth", creates:
+  Example: If you're in /code/myapp and run "gwt feature/auth", creates:
     /code/myapp-feature-auth/
 
   The pattern can be customized via GWT_DIR_PATTERN in the config file.
 
 BRANCH DETECTION:
-  wt automatically detects the branch type and handles it appropriately:
+  gwt automatically detects the branch type and handles it appropriately:
 
   1. Local branch exists → Uses existing branch
   2. Remote branch exists → Fetches and creates tracking branch
   3. Branch doesn't exist → Creates new branch from current HEAD
 
 EXAMPLES:
-  wt                           # List all worktrees
-  wt feature/new-login        # Create worktree for new feature
-  wt hotfix/security-patch    # Create worktree for hotfix
-  wt colleague-branch         # Review colleague's work
+  gwt                           # List all worktrees
+  gwt feature/new-login        # Create worktree for new feature
+  gwt hotfix/security-patch    # Create worktree for hotfix
+  gwt colleague-branch         # Review colleague's work
 
   # From anywhere in the repository (auto-finds repo root):
   cd ~/code/myapp/src/components
-  wt feature/refactor         # Still works! Creates ../myapp-feature-refactor
+  gwt feature/refactor         # Still works! Creates ../myapp-feature-refactor
 
 COMMON SCENARIOS:
   Emergency hotfix while working on feature:
-    wt hotfix/urgent          # Instantly switch to clean hotfix environment
+    gwt hotfix/urgent          # Instantly switch to clean hotfix environment
     # Fix, commit, push
     cd ../myapp-feature-xyz   # Return to feature work
 
   Code review:
-    wt pr/review-123          # Check out PR in isolated directory
+    gwt pr/review-123          # Check out PR in isolated directory
     # Test, review, comment
-    wtclean                   # Remove when done
+    gwtclean                   # Remove when done
 
   Parallel development:
-    wt approach-a             # Try solution A
-    wt approach-b             # Try solution B
+    gwt approach-a             # Try solution A
+    gwt approach-b             # Try solution B
     diff -r ../myapp-approach-a ../myapp-approach-b  # Compare
 
 SAFETY FEATURES:
@@ -77,18 +77,18 @@ SAFETY FEATURES:
   - Auto-prunes broken worktree references (configurable via GWT_AUTO_PRUNE)
 
 SEE ALSO:
-  wtclean   Clean up orphaned directories
-  wtlist    Detailed worktree information
-  wts       Interactive worktree switcher
+  gwtclean   Clean up orphaned directories
+  gwtlist    Detailed worktree information
+  gwts       Interactive worktree switcher
 EOF
                 ;;
-            wtclean)
+            gwtclean)
                 cat << 'EOF'
-wtclean - Clean up orphaned worktree directories
+gwtclean - Clean up orphaned worktree directories
 
 USAGE:
-  wtclean
-  wtclean --help
+  gwtclean
+  gwtclean --help
 
 DESCRIPTION:
   Performs comprehensive cleanup of the worktree environment:
@@ -113,10 +113,10 @@ WHEN TO USE:
   - When worktree directories are manually moved/renamed
   - Before major refactoring to clean up workspace
   - Weekly maintenance to recover disk space
-  - When "wt" warns about orphaned directories
+  - When "gwt" warns about orphaned directories
 
 EXAMPLES:
-  wtclean                     # Interactive cleanup with confirmation
+  gwtclean                     # Interactive cleanup with confirmation
 
   # Typical output:
   # === Git Worktree Cleanup ===
@@ -141,17 +141,17 @@ CONFIGURATION:
   GWT_CLEANUP_PATTERNS="..."   # Custom directory patterns to find
 
 SEE ALSO:
-  wt        Create and manage worktrees
-  wtlist    View detailed worktree information
+  gwt        Create and manage worktrees
+  gwtlist    View detailed worktree information
 EOF
                 ;;
-            wtlist)
+            gwtlist)
                 cat << 'EOF'
-wtlist - List worktrees with detailed information
+gwtlist - List worktrees with detailed information
 
 USAGE:
-  wtlist
-  wtlist --help
+  gwtlist
+  gwtlist --help
 
 DESCRIPTION:
   Shows comprehensive information about all worktrees including:
@@ -171,7 +171,7 @@ OUTPUT FORMAT:
     [MISSING DIRECTORY] # If directory was deleted
 
 EXAMPLES:
-  wtlist
+  gwtlist
 
   # Typical output:
   # === Git Worktrees ===
@@ -192,22 +192,22 @@ WHEN TO USE:
 
 NOTES:
   - Requires being run from within a git repository
-  - For simple list, use "wt" without arguments
-  - For interactive switching, use "wts"
+  - For simple list, use "gwt" without arguments
+  - For interactive switching, use "gwts"
 
 SEE ALSO:
-  wt        Create and manage worktrees
-  wts       Interactive worktree switcher
-  wtclean   Clean up orphaned directories
+  gwt        Create and manage worktrees
+  gwts       Interactive worktree switcher
+  gwtclean   Clean up orphaned directories
 EOF
                 ;;
-            wts)
+            gwts)
                 cat << 'EOF'
-wts - Interactive worktree switcher
+gwts - Interactive worktree switcher
 
 USAGE:
-  wts
-  wts --help
+  gwts
+  gwts --help
 
 DESCRIPTION:
   Provides an interactive numbered menu to quickly switch between
@@ -215,7 +215,7 @@ DESCRIPTION:
   by number.
 
 EXAMPLES:
-  wts
+  gwts
 
   # Typical session:
   # Select worktree to switch to:
@@ -241,8 +241,8 @@ NOTES:
   - Validates selection before switching
 
 SEE ALSO:
-  wt        Create new worktrees
-  wtlist    View detailed worktree information
+  gwt        Create new worktrees
+  gwtlist    View detailed worktree information
 EOF
                 ;;
             config)
@@ -265,7 +265,7 @@ AVAILABLE OPTIONS:
     Examples:
       "{base}-{branch}"           → myapp-feature-auth
       "{branch}-{base}"           → feature-auth-myapp
-      "wt-{base}-{branch}"        → wt-myapp-feature-auth
+      "gwt-{base}-{branch}"        → gwt-myapp-feature-auth
       "{base}/{branch}"           → myapp/feature-auth (nested)
 
   GWT_AUTO_PRUNE=true
@@ -285,7 +285,7 @@ AVAILABLE OPTIONS:
     When false: Automatically deletes without confirmation
 
   GWT_CLEANUP_PATTERNS="*-feature* *-hotfix* *-release* *-review* *-epic*"
-    Space-separated patterns for directories that wtclean should find.
+    Space-separated patterns for directories that gwtclean should find.
     Uses standard shell globbing patterns.
 
     Default patterns match:
@@ -338,7 +338,7 @@ EOF
                 ;;
             *)
                 _gwt_print "$RED" "Unknown help topic: $cmd"
-                _gwt_print "$YELLOW" "Try: wthelp (for overview) or wthelp <command>"
+                _gwt_print "$YELLOW" "Try: gwthelp (for overview) or gwthelp <command>"
                 return 1
                 ;;
         esac
@@ -350,10 +350,10 @@ Git Worktree Utils - Comprehensive Help
 ═══════════════════════════════════════════════════════════════════════════
 
 QUICK START:
-  wt                     List all worktrees
-  wt feature/name        Create worktree for branch
-  wtclean                Clean up old worktrees
-  wthelp <command>       Detailed help for specific command
+  gwt                     List all worktrees
+  gwt feature/name        Create worktree for branch
+  gwtclean                Clean up old worktrees
+  gwthelp <command>       Detailed help for specific command
 
 ═══════════════════════════════════════════════════════════════════════════
 
@@ -371,81 +371,81 @@ CORE CONCEPT:
 
 COMMANDS:
 
-  wt [branch]
+  gwt [branch]
       Create or switch to a worktree for the specified branch.
       Without arguments, lists all worktrees.
       Run from anywhere in your repository.
 
       Examples:
-        wt                      # List worktrees
-        wt feature/auth         # Create worktree
-        wt hotfix/urgent        # Emergency hotfix
+        gwt                      # List worktrees
+        gwt feature/auth         # Create worktree
+        gwt hotfix/urgent        # Emergency hotfix
 
-      Details: wthelp wt
+      Details: gwthelp gwt
 
-  wtclean
+  gwtclean
       Clean up orphaned directories and broken worktree references.
       Shows disk usage and prompts for confirmation.
 
       Examples:
-        wtclean                 # Interactive cleanup
+        gwtclean                 # Interactive cleanup
 
-      Details: wthelp wtclean
+      Details: gwthelp gwtclean
 
-  wtlist
+  gwtlist
       Show detailed information about all worktrees including branch,
       last commit, and modified file count.
 
       Examples:
-        wtlist                  # Detailed worktree info
+        gwtlist                  # Detailed worktree info
 
-      Details: wthelp wtlist
+      Details: gwthelp gwtlist
 
-  wts
+  gwts
       Interactive menu for quickly switching between worktrees.
 
       Examples:
-        wts                     # Show numbered menu
+        gwts                     # Show numbered menu
 
-      Details: wthelp wts
+      Details: gwthelp gwts
 
-  wthelp [topic]
+  gwthelp [topic]
       Show help information.
 
       Examples:
-        wthelp                  # This overview
-        wthelp wt               # Detailed help for wt
-        wthelp config           # Configuration reference
+        gwthelp                  # This overview
+        gwthelp gwt               # Detailed help for gwt
+        gwthelp config           # Configuration reference
 
-      Topics: wt, wtclean, wtlist, wts, config, workflows, examples
+      Topics: gwt, gwtclean, gwtlist, gwts, config, workflows, examples
 
 ═══════════════════════════════════════════════════════════════════════════
 
 COMMON WORKFLOWS:
 
   Feature Development:
-    wt feature/new-feature      # Create isolated environment
+    gwt feature/new-feature      # Create isolated environment
     # ... work on feature ...
     git push origin feature/new-feature
-    wtclean                     # Clean up after merge
+    gwtclean                     # Clean up after merge
 
   Emergency Hotfix:
-    wt hotfix/critical          # Instant clean environment
+    gwt hotfix/critical          # Instant clean environment
     # ... fix bug ...
     git push
     cd ../myapp-feature-xyz     # Return to feature work
 
   Code Review:
-    wt pr/review-123            # Check out PR
+    gwt pr/review-123            # Check out PR
     # ... test and review ...
     cd ../myapp                 # Back to main work
-    wtclean                     # Remove review worktree
+    gwtclean                     # Remove review worktree
 
   Parallel Approaches:
-    wt approach-a               # Try solution A
-    wt approach-b               # Try solution B
+    gwt approach-a               # Try solution A
+    gwt approach-b               # Try solution B
     diff -r ../myapp-approach-a ../myapp-approach-b
-    # Keep the better one, wtclean the other
+    # Keep the better one, gwtclean the other
 
 ═══════════════════════════════════════════════════════════════════════════
 
@@ -460,23 +460,23 @@ CONFIGURATION:
     GWT_CLEANUP_PATTERNS     Patterns for finding orphans
     GWT_USE_COLOR            Enable colored output
 
-  Full details: wthelp config
+  Full details: gwthelp config
 
 ═══════════════════════════════════════════════════════════════════════════
 
 GETTING HELP:
 
-  General help:        wthelp
-  Command details:     wthelp <command>
-  Configuration:       wthelp config
-  Workflows:           wthelp workflows
-  Examples:            wthelp examples
+  General help:        gwthelp
+  Command details:     gwthelp <command>
+  Configuration:       gwthelp config
+  Workflows:           gwthelp workflows
+  Examples:            gwthelp examples
 
   Available topics:
-    - wt          Main worktree command
-    - wtclean     Cleanup utility
-    - wtlist      Detailed listing
-    - wts         Interactive switcher
+    - gwt          Main worktree command
+    - gwtclean     Cleanup utility
+    - gwtlist      Detailed listing
+    - gwts         Interactive switcher
     - config      Configuration reference
     - workflows   Common usage patterns
     - examples    Real-world examples
@@ -486,21 +486,21 @@ GETTING HELP:
 TROUBLESHOOTING:
 
   "Directory already exists":
-    wtclean                       # Will detect and offer removal
+    gwtclean                       # Will detect and offer removal
 
   "Branch already exists":
-    wt existing-branch           # Just checks it out
+    gwt existing-branch           # Just checks it out
 
   Worktree in broken state:
     git worktree prune
-    wtclean
+    gwtclean
 
   After moving repository:
     git worktree repair
 
 ═══════════════════════════════════════════════════════════════════════════
 
-For detailed help on any command: wthelp <command>
+For detailed help on any command: gwthelp <command>
 GitHub: https://github.com/yourusername/git-worktree-utils
 
 EOF
